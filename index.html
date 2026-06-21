@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Café Finder <span class="emoji">🌸</span></h1>
+        <p class="tagline">find your perfect little spot</p>
+
+        <div class="card">
+            <div class="field-group">
+                <p class="field-label">Venue Type</p>
+                <select id="category">
+                    <option>All</option>
+                    <option>Cafe</option>
+                    <option>Restaurant</option>
+                </select>
+            </div>
+
+            <div class="field-group">
+                <p class="field-label">Radius</p>
+                <input type="number" id="radius" placeholder="Distance in km" min="1" max="50">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="field-group">
+                <p class="field-label">Location</p>
+                <input type="text" id="location" placeholder="Enter a city or area">
+            </div>
+
+            <button id="fetchbtn">Find Places</button>
+        </div>
+
+        
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

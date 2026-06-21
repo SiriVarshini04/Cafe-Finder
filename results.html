@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="newstyle.css">
+</head>
+<body>
+    <div id="map"></div>
+
+    <div class="results-panel">
+        <a href="index.html" class="back-link">← back to search</a>
+        <h2 id="title"></h2>
+        <div class="title-line"></div>
+        <p class="results-count" id="count"></p>
+        <div class="results-list" id="results">
+            <div class="state-msg">
+                <div class="spinner"></div>
+                <p class="state-text">finding cozy spots…</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

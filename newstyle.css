@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;500&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pink-bg: #FFD6E0;
+    --pink-mid: #FFB3C6;
+    --pink-deep: #FF8FAB;
+    --pink-accent: #FB6F92;
+    --blush: #FFF0F3;
+    --text: #5C2D3E;
+    --text-light: #9C6070;
+    --white-glass: rgba(255,255,255,0.72);
+    --shadow: 0 8px 32px rgba(251,111,146,0.18);
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    overflow: hidden;
+}
+
+/* Map */
+#map {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Gradient veil so panel is readable over map */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 380px;
+    background: linear-gradient(to right, rgba(255,200,215,0.6) 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Results panel */
+.results-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 100vh;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 18px;
+    overflow: hidden;
+}
+
+/* Back link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink-accent);
+    text-decoration: none;
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+.back-link:hover { opacity: 1; }
+
+/* Title */
+#title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.title-line {
+    width: 36px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pink-accent), var(--pink-deep));
+    border-radius: 2px;
+    margin: 8px 0 14px;
+}
+
+.results-count {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+/* Scrollable list */
+.results-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 4px;
+}
+
+.results-list::-webkit-scrollbar { width: 3px; }
+.results-list::-webkit-scrollbar-thumb {
+    background: var(--pink-mid);
+    border-radius: 10px;
+}
+.results-list::-webkit-scrollbar-track { background: transparent; }
+
+/* Place card */
+.cafe-card {
+    background: var(--white-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255,255,255,0.85);
+    border-radius: 16px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    box-shadow: 0 4px 14px rgba(251,111,146,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Pink left accent bar */
+.cafe-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--pink-accent), var(--pink-deep));
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.cafe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: rgba(255,143,171,0.6);
+}
+.cafe-card:hover::before { opacity: 1; }
+
+.cafe-card.active {
+    border-color: var(--pink-accent);
+    box-shadow: 0 6px 20px rgba(251,111,146,0.25);
+}
+.cafe-card.active::before { opacity: 1; }
+
+.place-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.place-type {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pink-accent);
+    opacity: 0.8;
+}
+
+/* Loading / empty state */
+.state-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 10px;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.state-icon { font-size: 2rem; }
+
+.state-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+    width: 36px; height: 36px;
+    border: 2px solid rgba(251,111,146,0.2);
+    border-top-color: var(--pink-accent);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+/* Leaflet popup */
+.leaflet-popup-content-wrapper {
+    background: var(--white-glass) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1.5px solid rgba(255,255,255,0.85) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--shadow) !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 14px !important;
+    color: var(--text) !important;
+}
+.leaflet-popup-tip { background: rgba(255,240,243,0.9) !important; }
+.leaflet-popup-close-button { color: var(--pink-accent) !important; }
